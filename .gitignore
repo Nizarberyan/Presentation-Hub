@@ -1,0 +1,13 @@
+setup.sh
+.idea
+.env
+node_modules
+dist
+.DS_Store
+.vscode
+*.log
+coverage
+*.tmp
+*.bak
+*.swp
+docker-compose.yml
