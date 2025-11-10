@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 	"name": "presentaion-hub",
 	"private": true,
 	"version": "0.0.1",
@@ -28,4 +29,12 @@
 		"jsonwebtoken": "^9.0.2",
 		"mongoose": "^8.19.3"
 	}
+=======
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  },
+  "scripts": {
+    "format": "prettier --write ."
+  }
+>>>>>>> cf3389222c4355fc49c1097bcc4adec551df2477
 }
