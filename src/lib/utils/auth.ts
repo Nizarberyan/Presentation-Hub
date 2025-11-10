@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '$env/static/private';
 import type { RequestEvent } from '@sveltejs/kit';
 import User from '$lib/models/User';
+import { connectDB } from './db';
 
 export function generateToken(userId: string): string {
   return jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '1d' });
@@ -25,6 +26,7 @@ export async function getUser(event: RequestEvent) {
   if (!decoded) return null;
 
   try {
+    await connectDB();
     const user = await User.findById(decoded.id);
     return user;
   } catch {
