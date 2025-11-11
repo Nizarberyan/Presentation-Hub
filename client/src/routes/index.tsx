@@ -3,6 +3,7 @@ import RootLayout from "./root";
 import Home from "./home";
 import { LoginRoute, RegisterRoute } from "./auth";
 import DashboardRoutes from "./dashboard";
+import PresentationDetail from "./presentation"
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "login", element: <LoginRoute /> },
       { path: "register", element: <RegisterRoute /> },
+        {
+            path: "presentation/:id",
+            element: <PresentationDetail /> // Use placeholder
+        },
       {
         path: "dashboard",
         element: <DashboardRoutes.Dashboard />,

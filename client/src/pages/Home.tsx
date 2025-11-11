@@ -15,11 +15,15 @@ import type { Presentation } from "../types/Presentation.type";
 import api from "../api";
 import { StatusBadge } from "../components/StatusBadge.tsx";
 import { PresentationSkeleton } from "../components/PresentationSkeleton.tsx";
+// Import the navigation hook from react-router-dom
+import { useNavigate } from "react-router-dom";
 
 // Main Home Component
 const Home: React.FC = () => {
     const [presentations, setPresentations] = useState<Presentation[]>([]);
     const [loading, setLoading] = useState(true);
+    // Initialize the navigate function
+    const navigate = useNavigate();
 
     useEffect(() => {
         const loadPresentations = async () => {
@@ -38,6 +42,11 @@ const Home: React.FC = () => {
         loadPresentations();
     }, []);
 
+    // Handler for clicking a presentation card
+    const handleCardClick = (id: string) => {
+        navigate(`/presentation/${id}`);
+    };
+
     return (
         <Box
             sx={{
@@ -47,7 +56,9 @@ const Home: React.FC = () => {
                 px: 2,
             }}
         >
-            <Container maxWidth="xl"> {/* Changed to xl to fit more items comfortably */}
+            <Container maxWidth="xl">
+                {" "}
+                {/* Changed to xl to fit more items comfortably */}
                 {/* Header Section */}
                 <Paper
                     elevation={3}
@@ -94,7 +105,6 @@ const Home: React.FC = () => {
                         )}
                     </Box>
                 </Paper>
-
                 {/* Content Grid */}
                 {loading ? (
                     <Grid container spacing={3}>
@@ -124,14 +134,20 @@ const Home: React.FC = () => {
                     <Grid container spacing={3}>
                         {presentations.map((presentation) => (
                             // FIX: Use 'size' prop instead of 'item xs={...}'
-                            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={presentation._id}>
+                            <Grid
+                                size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+                                key={presentation._id}
+                            >
                                 <Card
                                     elevation={3}
+                                    // Add the onClick handler here
+                                    onClick={() => handleCardClick(presentation._id)}
                                     sx={{
                                         height: "100%",
                                         display: "flex",
                                         flexDirection: "column",
                                         transition: "all 0.3s ease",
+                                        cursor: "pointer", // Add cursor pointer for visual feedback
                                         "&:hover": {
                                             transform: "translateY(-8px)",
                                             boxShadow: 8,
@@ -158,7 +174,7 @@ const Home: React.FC = () => {
                                                             month: "short",
                                                             day: "numeric",
                                                             year: "numeric",
-                                                        }
+                                                        },
                                                     )}
                                                 </Typography>
                                             </Box>

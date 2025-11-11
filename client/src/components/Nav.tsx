@@ -2,104 +2,148 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import {
-    AppBar,
-    Toolbar,
-    Typography,
-    Button,
-    Container,
-    Box,
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Container,
+  Box,
+  Avatar,
 } from "@mui/material";
 
 const Nav: React.FC = () => {
-    const { user, isLoggedIn, logout } = useAuth();
-    const navigate = useNavigate();
+  const { user, isLoggedIn, logout } = useAuth();
+  const navigate = useNavigate();
 
-    const handleLogout = () => {
-        logout();
-        navigate("/login");
-    };
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
-    return (
-        // AppBar is the MUI equivalent of a nav bar
-        <AppBar position="static">
-            {/* Container sets the max-width, equivalent to max-w-7xl mx-auto */}
-            <Container maxWidth="lg">
-                {/* Toolbar handles the horizontal layout and padding */}
-                <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-                    {/* Left Side: Brand/Title */}
-                    <Typography
-                        variant="h6"
-                        component={Link} // Use React Router's Link
-                        to="/"
-                        sx={{
-                            color: "inherit",
-                            textDecoration: "none",
-                            fontWeight: 700,
-                        }}
-                    >
-                        Presentation Hub
-                    </Typography>
+  return (
+    <AppBar
+      position="static"
+      elevation={0}
+      sx={{
+        background: "linear-gradient(90deg, #1976d2 0%, #1565c0 100%)",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
+      }}
+    >
+      <Container maxWidth="lg">
+        <Toolbar disableGutters sx={{ justifyContent: "space-between", py: 1 }}>
+          {/* Brand */}
+          <Typography
+            variant="h6"
+            component={Link}
+            to="/"
+            sx={{
+              color: "white",
+              textDecoration: "none",
+              fontWeight: 700,
+              letterSpacing: 0.5,
+              "&:hover": { opacity: 0.9 },
+            }}
+          >
+            Presentation Hub
+          </Typography>
 
-                    {/* Right Side: Auth Links */}
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                        {isLoggedIn ? (
-                            <>
-                                <Typography variant="body2" sx={{ mr: 1, display: { xs: 'none', sm: 'block'} }}>
-                                    Welcome, {user?.name}
-                                </Typography>
-                                <Button
-                                    color="inherit"
-                                    component={Link}
-                                    to="/dashboard"
-                                >
-                                    Dashboard
-                                </Button>
-                                <Button
-                                    color="inherit"
-                                    variant="outlined" // Makes it stand out
-                                    onClick={handleLogout}
-                                    sx={{
-                                        borderColor: 'rgba(255, 255, 255, 0.5)',
-                                        '&:hover': {
-                                            borderColor: 'white',
-                                            backgroundColor: 'rgba(255, 255, 255, 0.08)'
-                                        }
-                                    }}
-                                >
-                                    Logout
-                                </Button>
-                            </>
-                        ) : (
-                            <>
-                                <Button
-                                    color="inherit"
-                                    component={Link}
-                                    to="/login"
-                                >
-                                    Login
-                                </Button>
-                                <Button
-                                    color="inherit"
-                                    variant="outlined" // Makes it stand out
-                                    component={Link}
-                                    to="/register"
-                                    sx={{
-                                        borderColor: 'rgba(255, 255, 255, 0.5)',
-                                        '&:hover': {
-                                            borderColor: 'white',
-                                            backgroundColor: 'rgba(255, 255, 255, 0.08)'
-                                        }
-                                    }}
-                                >
-                                    Register
-                                </Button>
-                            </>
-                        )}
-                    </Box>
-                </Toolbar>
-            </Container>
-        </AppBar>
-    );
+          {/* Navigation & Auth */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            {isLoggedIn ? (
+              <>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    pr: 1,
+                    borderRight: "1px solid rgba(255,255,255,0.2)",
+                  }}
+                >
+                  <Avatar
+                    sx={{
+                      width: 28,
+                      height: 28,
+                      bgcolor: "rgba(255,255,255,0.25)",
+                      fontSize: 14,
+                    }}
+                  >
+                    {user?.name?.[0]?.toUpperCase() || "U"}
+                  </Avatar>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "rgba(255,255,255,0.85)",
+                      display: { xs: "none", sm: "block" },
+                    }}
+                  >
+                    {user?.name || "User"}
+                  </Typography>
+                </Box>
+
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to="/dashboard"
+                  sx={{
+                    textTransform: "none",
+                    "&:hover": { backgroundColor: "rgba(255,255,255,0.1)" },
+                  }}
+                >
+                  Dashboard
+                </Button>
+                <Button
+                  onClick={handleLogout}
+                  variant="outlined"
+                  color="inherit"
+                  sx={{
+                    textTransform: "none",
+                    borderColor: "rgba(255,255,255,0.5)",
+                    "&:hover": {
+                      borderColor: "white",
+                      backgroundColor: "rgba(255,255,255,0.1)",
+                    },
+                  }}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to="/login"
+                  sx={{
+                    textTransform: "none",
+                    "&:hover": { backgroundColor: "rgba(255,255,255,0.1)" },
+                  }}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  component={Link}
+                  to="/register"
+                  sx={{
+                    textTransform: "none",
+                    borderColor: "rgba(255,255,255,0.5)",
+                    "&:hover": {
+                      borderColor: "white",
+                      backgroundColor: "rgba(255,255,255,0.1)",
+                    },
+                  }}
+                >
+                  Register
+                </Button>
+              </>
+            )}
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
 };
 
 export default Nav;

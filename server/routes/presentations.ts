@@ -4,8 +4,6 @@ import PresentationController from "../controllers/presentation.controller";
 // Get all presentations
 router.get("/", PresentationController.getAllPresentations);
 
-router.post("/", () => {
-  console.log("hello");
-});
+router.get("/:id", PresentationController.getPresentationById);
 
 export default router;

@@ -6,3 +6,9 @@ export const getAllPresentations = async (): Promise<IPresentation[]> => {
         .populate('assignedTo', 'name email')
         .lean() as IPresentation[];
 }
+export const getPresentationById = async (id: string): Promise<IPresentation | null> => {
+    return await Presentation.findById(id)
+        .populate('assignedTo', 'name email')
+        .populate('createdBy', 'name email')
+        .lean() as IPresentation | null;
+}
