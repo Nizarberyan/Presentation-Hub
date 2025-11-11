@@ -1,0 +1,32 @@
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import type { IUserDocument } from "../types/user.type";
+
+const userSchema = new mongoose.Schema(
+  {
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    name: { type: String, required: true },
+    role: {
+      type: String,
+      enum: ["student", "teacher", "admin"],
+      default: "student",
+    },
+  },
+  { timestamps: true },
+);
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+
+userSchema.methods.comparePassword = async function (
+  this: import("../types/user.type").IUserDocument,
+  password: string,
+): Promise<boolean> {
+  return bcrypt.compare(password, this.password);
+};
+
+export default mongoose.model<IUserDocument>("User", userSchema);

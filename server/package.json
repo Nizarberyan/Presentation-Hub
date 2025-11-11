@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "module": "index.js",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun --hot index.ts",
+    "format": "prettier --write .",
+    "seed": "bun seeds/seed.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prettier": "^3.6.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.1.0",
+    "@types/express": "^5.0.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
+  }
+}
